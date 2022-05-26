@@ -145,7 +145,14 @@ custom_hooks = [
         type='ExpMomentumEMAHook',
         resume_from=resume_from,
         momentum=0.0001,
-        priority=49)
+        priority=49),
+    dict(
+        type='MMDetWandbHook',
+        init_kwargs={'project': 'MMDetection-yolox_s'},
+        interval=2,
+        log_checkpoint=True,
+        log_checkpoint_metadata=True,
+        num_eval_images=10)
 ]
 checkpoint_config = dict(interval=interval)
 evaluation = dict(
@@ -162,4 +169,4 @@ log_config = dict(interval=50)
 # NOTE: `auto_scale_lr` is for automatically scaling LR,
 # USER SHOULD NOT CHANGE ITS VALUES.
 # base_batch_size = (8 GPUs) x (8 samples per GPU)
-auto_scale_lr = dict(base_batch_size=64)
+auto_scale_lr = dict(base_batch_size=8)
