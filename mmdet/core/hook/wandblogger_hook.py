@@ -348,7 +348,9 @@ class MMDetWandbHook(WandbLoggerHook):
             bboxes = data_ann['bboxes']
             labels = data_ann['labels']
             masks = data_ann.get('masks', None)
-
+            # if all elements in masks are None then masks is None
+            if not any(masks):
+                masks = None
             # Get dict of bounding boxes to be logged.
             assert len(bboxes) == len(labels)
             wandb_boxes = self._get_wandb_bboxes(bboxes, labels)
@@ -510,7 +512,7 @@ class MMDetWandbHook(WandbLoggerHook):
             label = label + 1
             # Get bitmap mask from polygon.
             if is_poly_mask:
-                if height is not None and width is not None:
+                if height is not None and width is not None and mask is not None:
                     mask = polygon_to_bitmap(mask, height, width)
             # Create composite masks for each class.
             if label not in mask_label_dict.keys():
