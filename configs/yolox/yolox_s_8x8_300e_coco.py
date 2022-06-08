@@ -1,6 +1,6 @@
 _base_ = ['../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py']
 
-img_scale = (640, 640)  # height, width
+img_scale = (704,704)  # height, width
 CLASSES=('ripe','unripe')
 # model settings
 model = dict(
@@ -122,10 +122,10 @@ optimizer = dict(
     paramwise_cfg=dict(norm_decay_mult=0., bias_decay_mult=0.))
 optimizer_config = dict(grad_clip=None)
 
-max_epochs = 300
+max_epochs = 1000
 num_last_epochs = 15
 resume_from = None
-interval = 1
+interval = 10
 
 # learning policy
 lr_config = dict(
@@ -167,7 +167,7 @@ custom_hooks = [
     dict(
         type='MMDetWandbHook',
         init_kwargs={'project': 'MMDetection-yolox_s'},
-        interval=2,
+        interval=10,
         log_checkpoint=True,
         log_checkpoint_metadata=True,
         num_eval_images=10,
